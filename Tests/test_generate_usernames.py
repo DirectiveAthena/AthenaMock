@@ -7,7 +7,7 @@ import unittest
 import timeit
 
 # Custom Library
-from AthenaMock.functions.generators import generate_username
+from AthenaMock.functions.generator import generate_username
 
 # Custom Packages
 
