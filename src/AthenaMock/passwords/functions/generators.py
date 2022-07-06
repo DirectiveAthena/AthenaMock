@@ -29,3 +29,15 @@ def generate_password(
 
     random.seed(seed)
     return "".join(random.sample(CHOICES,random.randint(length_min, length_max)))
+
+def generate_password_fixed_length(
+        seed=None,
+        *,
+        length:int=32
+):
+    # if the seed is undefined, generate a random one
+    if seed is None:
+        seed = generate_random_seed()
+
+    random.seed(seed)
+    return "".join(random.sample(CHOICES,length))
