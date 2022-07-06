@@ -3,26 +3,29 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-import unittest
-import timeit
+import random
+import string
+import itertools
 
 # Custom Library
-from AthenaMock.usernames.functions.generators import generate_username
 
 # Custom Packages
-
+from AthenaMock.functions.generators_seed import generate_random_seed
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class TestGenerateUsernames(unittest.TestCase):
-    def test_general(self):
-        username_generator = (generate_username(
-                # seed="a"
-            ) for _ in range(1_000_000))
+CHOICES = string.ascii_letters + string.digits + string.punctuation
 
-        print(timeit.timeit(lambda :list(username_generator)))
-        # print(*username_generator, sep="\n")
-        # print(
-        #
-        # )
+def generate_password(
+        seed=None,
+        *,
+        length_min:int=6,
+        length_max:int=32
+):
+    # if the seed is undefined, generate a random one
+    if seed is None:
+        seed = generate_random_seed()
+
+    random.seed(seed)
+    return "".join(random.sample(CHOICES,random.randint(length_min, length_max)))

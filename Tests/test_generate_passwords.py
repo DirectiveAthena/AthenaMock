@@ -7,7 +7,7 @@ import unittest
 import timeit
 
 # Custom Library
-from AthenaMock.usernames.functions.generators import generate_username
+from AthenaMock.passwords.functions.generators import generate_password
 
 # Custom Packages
 
@@ -15,14 +15,11 @@ from AthenaMock.usernames.functions.generators import generate_username
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class TestGenerateUsernames(unittest.TestCase):
+class TestGeneratePassword(unittest.TestCase):
     def test_general(self):
-        username_generator = (generate_username(
+        password_generator = (generate_password(
                 # seed="a"
-            ) for _ in range(1_000_000))
+            ) for _ in range(1_000))
 
-        print(timeit.timeit(lambda :list(username_generator)))
-        # print(*username_generator, sep="\n")
-        # print(
-        #
-        # )
+        # print(timeit.timeit(lambda :list(password_generator)))
+        print(*password_generator, sep="\n")

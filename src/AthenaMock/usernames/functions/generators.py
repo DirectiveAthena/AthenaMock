@@ -9,11 +9,11 @@ import random
 from AthenaLib.functions.random import random_bool
 
 # Custom Packages
+from AthenaMock.functions.generators_seed import generate_random_seed
 from AthenaMock.usernames.data.enclosing import ENCLOSING
 from AthenaMock.usernames.data.names import NAMES, NAMES_ADJECTIVES
 from AthenaMock.usernames.data.end import END
 from AthenaMock.usernames.data.seperations import SEPARATIONS
-from AthenaMock.functions.generators_seed import generate_random_seed
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
