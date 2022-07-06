@@ -4,32 +4,42 @@
 # General Packages
 from __future__ import annotations
 import random
+
 # Custom Library
+from AthenaLib.functions.random import random_bool
 
 # Custom Packages
-from AthenaMock.data.text_choices import CHOICE_USERNAME
+from AthenaMock.data.usernames.enclosing import ENCLOSING
+from AthenaMock.data.usernames.names import NAMES
+from AthenaMock.data.usernames.end import END
+from AthenaMock.data.usernames.seperations import SEPARATIONS
+from AthenaMock.functions.generators_seed import generate_random_seed
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def generate_username(*,amount:int=24, length_min:int=4,length_max:int=16, choice:str=CHOICE_USERNAME,unique:bool=True):
-    if unique:
-        for username in _generate_username_unique(amount=amount, length_min=length_min, length_max=length_max, choice=choice):
-            yield username
-    else:
-        for _ in range(amount):
-         yield _generate_username_single(length_min=length_min, length_max=length_max, choice=choice)
 
-def _generate_username_single(*, length_min:int=4,length_max:int=16, choice:str=CHOICE_USERNAME):
-    return "".join(random.choice(choice) for _ in range(random.randint(length_min,length_max)))
+def generate_username(*,seed=None):
+    if seed is None:
+        seed = generate_random_seed()
 
-def _generate_username_unique(*,amount:int=24, length_min:int=4,length_max:int=16, choice:str=CHOICE_USERNAME):
-    mem:set[str] = set()
-    while len(mem) <= amount:
-        username = _generate_username_single(length_min=length_min, length_max=length_max, choice=choice)
-        if username not in mem:
-            mem.add(username)
-            yield username
+    # define and use the seed
+    #   if a same seed is used, the same username will be generated
+    random.seed(seed)
 
+    enclose = random.choice(ENCLOSING) if random_bool(1/4) else ""
 
+    name_partials = {random.choice(NAMES) for _ in range(random.randint(1, 5))}
+    sep = random.choice(SEPARATIONS) if random_bool(1/10) else ""
+    name = sep.join(
+        name.capitalize() if random_bool() else name
+        for name in name_partials
+    )
 
+    # decide if the username has to have some sort of end tag
+    end = (
+        "".join(str(random.randint(0,9)) for _ in range(random.randint(0, 5)))
+        if random_bool(1/10) else random.choice(END)
+    ) if random_bool(1/5) else ""
+
+    return f"{enclose}{name}{enclose[::-1]}{end}"
