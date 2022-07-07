@@ -20,7 +20,7 @@ NAMES_OBJECTS = [
 ]
 
 NAMES_ADJECTIVES = [
-    "botty", "sweet", "bubbly", "angelic"
+    "scammed", "sweet", "bubbly", "angelic"
 ]
 
 NAMES_ANIMALS = [

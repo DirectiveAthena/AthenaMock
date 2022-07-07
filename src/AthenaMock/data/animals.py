@@ -12,6 +12,8 @@ from __future__ import annotations
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 ANIMALS = [
+    # todo maybe make this into a dictionary with set values?
+    #   so common animals get chosen more often
     "Aardvark"
     "Aardwolf"
     "Abyssinian"
