@@ -16,13 +16,16 @@ from AthenaMock.usernames.data.end import END
 from AthenaMock.usernames.data.seperations import SEPARATIONS
 from AthenaMock.data.colors import COLORS
 from AthenaMock.data.animals import ANIMALS
+from AthenaMock.data.names.first_names import FIRST_NAMES
+
+# ----------------------------------------------------------------------------------------------------------------------
+# - Support Code -
+# ----------------------------------------------------------------------------------------------------------------------
+NAME_CHOICE = [*NAMES, *ANIMALS, *COLORS,*FIRST_NAMES]
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-NAME_CHOICE = [*NAMES, *ANIMALS, *COLORS]
-
-
 def generate_username(
         seed=None,
         *,
