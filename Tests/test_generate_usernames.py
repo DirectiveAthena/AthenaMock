@@ -21,9 +21,5 @@ class TestGenerateUsernames(unittest.TestCase):
                 # seed="a"
             ) for _ in range(1_000_000))
 
-        with open("username.txt", "a+") as file:
-            for username in username_generator:
-                file.write(f"{username}\n")
-
-        # print(timeit.timeit(lambda :list(username_generator)))
+        print(timeit.timeit(lambda :list(username_generator)))
         # print(*username_generator, sep="\n")
