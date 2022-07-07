@@ -14,10 +14,14 @@ from AthenaMock.usernames.data.enclosing import ENCLOSING
 from AthenaMock.usernames.data.names import NAMES, NAMES_ADJECTIVES
 from AthenaMock.usernames.data.end import END
 from AthenaMock.usernames.data.seperations import SEPARATIONS
+from AthenaMock.data.colors import COLORS
+from AthenaMock.data.animals import ANIMALS
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
+NAME_CHOICE = [*NAMES, *ANIMALS, *COLORS]
+
 
 def generate_username(
         seed=None,
@@ -43,7 +47,7 @@ def generate_username(
     sep = random.choice(SEPARATIONS) if random_bool(probability_separation) else ""
     name = sep.join(
         name.capitalize() if random_bool(probability_capitalize) else name
-        for name in {random.choice(NAMES) for _ in range(random.randint(1, 3))}
+        for name in {random.choice(NAME_CHOICE) for _ in range(random.randint(1, 3))}
     )
 
     # add a random adjective in front 1/2 chance by default
