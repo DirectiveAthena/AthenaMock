@@ -7,9 +7,9 @@ import random
 
 # Custom Library
 from AthenaLib.functions.random import random_bool
+import AthenaLib.data.text as text
 
 # Custom Packages
-from AthenaMock.functions.generators_seed import generate_random_seed
 from AthenaMock.usernames.data.enclosing import ENCLOSING
 from AthenaMock.usernames.data.names import NAMES, NAMES_ADJECTIVES
 from AthenaMock.usernames.data.end import END
@@ -17,16 +17,62 @@ from AthenaMock.usernames.data.seperations import SEPARATIONS
 from AthenaMock.data.colors import COLORS
 from AthenaMock.data.animals import ANIMALS
 from AthenaMock.data.names.first_names import FIRST_NAMES
+from AthenaMock.data.names.sur_names import SUR_NAMES
+
+from AthenaMock.functions.generators_seed import set_seed
+
+from AthenaMock.usernames.models.username import Username
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
 # ----------------------------------------------------------------------------------------------------------------------
-NAME_CHOICE = [*NAMES, *ANIMALS, *COLORS,*FIRST_NAMES]
+NAME_CHOICE = [*NAMES, *ANIMALS, *COLORS,*FIRST_NAMES,*SUR_NAMES]
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def generate_username(
+def generate_username_2():
+    # todo System like generate_username_1 but without the Object creation and only functional approach
+    pass
+
+def generate_username_1(
+        seed=None,
+        *,
+        probability_separation:float =          1/5,
+        probability_adjective:float =           1/2,
+        probability_capitalize:float =          1/2,
+        probability_end_number:float=           1/10,
+        probability_enclosing:float=            1/4,
+        probability_enclosing_no_start:float=   1/12,
+        probability_enclosing_no_end:float=     1/12,
+        **_
+) -> str:
+    # if the seed is undefined, generate a random one
+    #   The function below will also invoke the random.seed(seed) so the seed is set
+    set_seed(seed)
+
+    return str(
+        Username()
+        .numerical_end(random_bool(probability_end_number))
+        .enclosing(
+            random.choice(ENCLOSING) if random_bool(probability_enclosing) else text.NOTHING,
+            start=random_bool(probability_enclosing_no_start),
+            end=random_bool(probability_enclosing_no_end)
+        )
+        .name(
+            (random.choice(SEPARATIONS) if random_bool(probability_separation) else text.NOTHING).join(
+                name.capitalize() if random_bool(probability_capitalize) else name
+                for name in {random.choice(NAME_CHOICE) for _ in range(random.randint(2, 3))}
+            ),
+        )
+        .adjective(
+            random.choice(NAMES_ADJECTIVES) if random_bool(probability_adjective) else text.NOTHING
+        )
+    )
+
+
+# ----------------------------------------------------------------------------------------------------------------------
+def generate_username_0(
         seed=None,
         *,
         probability_separation:float =          1/5,
@@ -37,14 +83,11 @@ def generate_username(
         probability_enclosing:float=            1/4,
         probability_enclosing_no_start:float=   1/12,
         probability_enclosing_no_end:float=     1/12,
+        **_
 ):
     # if the seed is undefined, generate a random one
-    if seed is None:
-        seed = generate_random_seed()
-
-    # define and use the seed
-    #   if a same seed is used, the same username will be generated
-    random.seed(seed)
+    #   The function below will also invoke the random.seed(seed) so the seed is set
+    set_seed(seed)
 
     #generate the bare name
     sep = random.choice(SEPARATIONS) if random_bool(probability_separation) else ""

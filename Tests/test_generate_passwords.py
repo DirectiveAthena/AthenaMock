@@ -21,5 +21,5 @@ class TestGeneratePassword(unittest.TestCase):
                 # seed="a"
             ) for _ in range(1_000))
 
-        # print(timeit.timeit(lambda :list(password_generator)))
-        print(*password_generator, sep="\n")
+        print(timeit.timeit(lambda :list(password_generator)))
+        # print(*password_generator, sep="\n")
